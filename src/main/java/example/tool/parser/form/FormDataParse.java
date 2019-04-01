@@ -79,7 +79,8 @@ public class FormDataParse {
      * @param data 传递chunk data过去解析
      */
     protected String parseFormDataSingleParam(InterfaceHttpData data) {
-        System.out.println("New FormData Upload SingleParam : "+ " \n\rThe data is : " + data+ "  End\n");
+        //System.out.println("New FormData Upload SingleParam : "+ " \n\rThe data is : " + data+ "  End\n");
+        logger.debug("New FormData Upload SingleParam : "+ " \n\rThe data is : " + data+ "  End\n");
         try {
             //解析参数类型数据
             if (data.getHttpDataType() == InterfaceHttpData.HttpDataType.Attribute) {
@@ -101,7 +102,8 @@ public class FormDataParse {
      * @param data 传递chunk data过去解析
      */
     protected HashMap<String, Object> parseFormDataMultiParams(InterfaceHttpData data) {
-        System.out.println("New FormData Upload: MultiParams"+ " \n\rThe data is : " + data+ "  End\n");
+        //System.out.println("New FormData Upload: MultiParams"+ " \n\rThe data is : " + data+ "  End\n");
+        logger.debug("New FormData Upload: MultiParams"+ " \n\rThe data is : " + data+ "  End\n");
         try {
             //解析参数类型数据
             if (data.getHttpDataType() == InterfaceHttpData.HttpDataType.Attribute) {
@@ -127,7 +129,8 @@ public class FormDataParse {
      * @param data 传递chunk data过去解析
      */
     protected Object parseFormDataEntity(InterfaceHttpData data) {
-        System.out.println("New FormData Upload Entity: "+ " \n\rThe data is : " + data+ "  End\n");
+        //System.out.println("New FormData Upload Entity: "+ " \n\rThe data is : " + data+ "  End\n");
+        logger.debug("New FormData Upload Entity: "+ " \n\rThe data is : " + data+ "  End\n");
         try {
             //解析参数类型数据
             if (data.getHttpDataType() == InterfaceHttpData.HttpDataType.Attribute) {

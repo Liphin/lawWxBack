@@ -2,6 +2,7 @@ package example.operation.impl.interestArticle;
 
 import com.alibaba.fastjson.JSON;
 import example.operation.entity.DynamicInfo;
+import example.operation.entity.UserDynamic;
 import example.operation.entity.response.ResponseData;
 import example.operation.entity.response.StatusCode;
 import example.operation.impl.common.CommonService;
@@ -18,9 +19,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,6 +59,35 @@ public class interestOpt {
             interestOpt.logger.debug(message, e);
             Assemble.responseErrorSetting(responseData, 500, message);
 
+        } finally {
+            CommonService.databaseCommitClose(sqlSession, responseData, false);
+        }
+        return responseData;
+    }
+
+    /**
+     * 获取指定范围的新闻数据
+     */
+    public static ResponseData getNewsListToPh(Object msg) {
+        ResponseData responseData = new ResponseData(StatusCode.ERROR.getValue());
+        SqlSession sqlSession = MybatisUtils.getSession();
+        String message = "";
+        try {
+            Map<String, Object> map = FormData.getParam(msg);
+            List<DynamicInfo> newsList = sqlSession.selectList(Mapper.GET_RANGE_NEWS_INFO_TO_PHONE, map);
+            //检查是否查找到指定起始位置及数目的新闻并返回相应结果
+            if (CommonService.checkNotNull(newsList)) {
+                Assemble.responseSuccessSetting(responseData, newsList);
+
+            } else {
+                message = "news info not found";
+                interestOpt.logger.warn(message);
+                Assemble.responseErrorSetting(responseData, 401, message);
+            }
+        } catch (Exception e) {
+            message = "sys error";
+            interestOpt.logger.debug(message, e);
+            Assemble.responseErrorSetting(responseData, 500, message);
         } finally {
             CommonService.databaseCommitClose(sqlSession, responseData, false);
         }
@@ -251,6 +278,118 @@ public class interestOpt {
     }
 
     /**
+     * 获取用户-新闻表数据
+     *
+     * @param msg
+     * @return
+     */
+    public static ResponseData getUserDynamicInfo(Object msg) {
+        ResponseData responseData = new ResponseData(StatusCode.ERROR.getValue());
+        SqlSession sqlSession = MybatisUtils.getSession();
+        String message = "";
+        try {
+            //Map<String, Object> map = FormData.getParam(msg);
+            UserDynamic UserDynamic_id = (UserDynamic) FormData.getParam(msg, UserDynamic.class);
+            //获取user_dynamic表对应该用户的数据
+            UserDynamic userDynamic = sqlSession.selectOne(Mapper.GET_USER_DYNAMIC_INFO, UserDynamic_id);
+            //获取该条dynamicinfo最新数据
+            DynamicInfo dynamicInfo = sqlSession.selectOne(Mapper.GET_SINGLE_NEWS_DETAIL_INFO, UserDynamic_id.getDynamic_timestamp());
+            //该用户第一次查看该新闻则插入user_dynamic表一条记录信息
+            if (!CommonService.checkNotNull(userDynamic)) {
+                //更新dynamicinfo表阅读次数
+                sqlSession.update(Mapper.UPDATE_DYNAMIC_VIEW_COUNT, UserDynamic_id.getDynamic_timestamp());
+
+                //设置dynamicInfo数量+1
+                dynamicInfo.setView_count(dynamicInfo.getView_count() + 1);
+
+                //插入新的记录到user_dynamic
+                UserDynamic userDynamicNew = new UserDynamic();
+                //userDynamicNew.setWx_user_id(String.valueOf(map.get(Common.WX_USER_ID)));
+                userDynamicNew.setWx_user_id(UserDynamic_id.getWx_user_id());
+                userDynamicNew.setDynamic_id(dynamicInfo.getId());
+                userDynamicNew.setDynamic_timestamp(dynamicInfo.getTimestamp());
+                userDynamicNew.setDynamic_view(1);
+                userDynamicNew.setDynamic_pitch(0);//默认打开时先不点赞
+                userDynamicNew.setTimestamp(CommonService.getTimeStamp());
+                userDynamicNew.setCreate_time(CommonService.getDateTime());
+                sqlSession.insert(Mapper.INSERT_NEW_USER_DYNAMIC_INFO, userDynamicNew);
+            }
+            //成功获取数据返回
+            Map<String, Object> data = new HashMap<>();
+            data.put(Common.DYNAMICINFO, dynamicInfo); //添加新闻具体数据
+            data.put(Common.USER_DYNAMIC, userDynamic); //添加该用户对该新闻的行为数据
+            Assemble.responseSuccessSetting(responseData, data);
+
+        } catch (Exception e) {
+            message = "getUserDynamic system error";
+            interestOpt.logger.error(message, e);
+            Assemble.responseErrorSetting(responseData, 500, message);
+
+        } finally {
+            CommonService.databaseCommitClose(sqlSession, responseData, true);
+        }
+        return responseData;
+    }
+
+    /**
+     * 手机端前端搜索指定匹配字段的新闻数据
+     *
+     * @param msg
+     * @return
+     */
+    public static ResponseData searchNews(Object msg) {
+        return CommonService.simpleImplOpt(false, (responseData, sqlSession) -> {
+            DynamicInfo dynamicInfo = (DynamicInfo) FormData.getParam(msg, DynamicInfo.class);
+            List<DynamicInfo> list = sqlSession.selectList(Mapper.SEARCH_NEWS, dynamicInfo);
+            Assemble.responseSuccessSetting(responseData, list);
+        });
+    }
+
+    /**
+     * 更新新闻的点赞数量
+     *
+     * @param msg
+     * @return
+     */
+    public static ResponseData updatePitchCount(Object msg) {
+        ResponseData responseData = new ResponseData(StatusCode.ERROR.getValue());
+        SqlSession sqlSession = MybatisUtils.getSession();
+        String message = "";
+        try {
+            Map<String, Object> map = FormData.getParam(msg);
+            //更新user_dynamic表的dynamic_pitch
+            //插入新的记录到user_dynamic
+            UserDynamic userDynamicUpdate = new UserDynamic();
+            userDynamicUpdate.setWx_user_id(String.valueOf(map.get(Common.WX_USER_ID)));
+            userDynamicUpdate.setDynamic_timestamp(String.valueOf(map.get(Common.DYNAMIC_TIMESTAMP)));
+            userDynamicUpdate.setDynamic_pitch(Integer.parseInt(String.valueOf(map.get(Common.DYNAMIC_PITCH))));
+            sqlSession.update(Mapper.UPDATE_USER_DYNAMIC_PITCH_COUNT, userDynamicUpdate);
+            //更新dynamicinfo表的pitch_count
+            sqlSession.update(Mapper.UPDATE_DYNAMIC_PITCH_COUNT, map);
+            //返回dynamicinfo表最新数据
+            DynamicInfo dynamicInfo = sqlSession.selectOne(Mapper.GET_SINGLE_NEWS_DETAIL_INFO, map);
+            //判空处理
+            if (CommonService.checkNotNull(dynamicInfo)) {
+                Assemble.responseSuccessSetting(responseData, dynamicInfo.getPitch_count());
+
+            } else {
+                message = "user dynamic update num 0";
+                interestOpt.logger.warn(message);
+                Assemble.responseErrorSetting(responseData, 401, message);
+            }
+
+        } catch (Exception e) {
+            message = "updatePitchCount system error";
+            interestOpt.logger.error(message, e);
+            Assemble.responseErrorSetting(responseData, 500, message);
+
+        } finally {
+            CommonService.databaseCommitClose(sqlSession, responseData, true);
+        }
+        return responseData;
+    }
+
+    /**
      * 设置动态信息的置顶设置
      * @return
      */
@@ -291,6 +430,7 @@ public class interestOpt {
         try {
             //获取传递过来的数据
             Map<String, Object> map = FormData.getParam(msg);
+            map.put("id",Integer.parseInt(map.get("id").toString()));
             //删除数据和文件资源等操作
             deleteInterestOpt(sqlSession, map);
             //返回正确数据

@@ -20,6 +20,8 @@ public class Mapper {
     public static final String SEARCH_TEAM_DATA_NUM = "searchTeamDataNum";
     public static final String SEARCH_MSG_DATA = "searchMsgData";
     public static final String SEARCH_MSG_DATA_NUM = "searchMsgDataNum";
+    public static final String GET_RANGE_NEWS_INFO_TO_PHONE = "getRangeNewsInfoToPhone";
+    public static final String SEARCH_NEWS = "searchNews";
 
     //趣文mapper定义
     public static final String GET_RANGE_INTEREST_TO_BG = "getRangeInterestToBg";
@@ -41,6 +43,7 @@ public class Mapper {
     public static final String EXAMPLE_INSERT = "exampleInsert";
     public static final String INSERT_NEW_ARTICLE = "insertNewArticle";
     public static final String INSERT_NEW_TEAM = "insertNewTeam";
+    public static final String INSERT_NEW_MSG = "insertNewMsg";
 
     //delete
     public static final String EXAMPLE_DELETE = "exampleDelete";
@@ -58,6 +61,19 @@ public class Mapper {
 
     public static final String UPDATE_MSG = "updateMsg";
     public static final String SET_MSG_STICK_INFO = "setMsgStickInfo";
+
+    //user_dynamic表的数据库操作mapper************************************************************
+    //select
+    public static final String GET_USER_DYNAMIC_INFO = "getUserDynamicInfo";
+    public static final String GET_SINGLE_NEWS_DETAIL_INFO = "getSingleNewsDetailInfo";
+
+    //insert
+    public static final String INSERT_NEW_USER_DYNAMIC_INFO = "insertNewUserDynamicInfo";
+
+    //update
+    public static final String UPDATE_DYNAMIC_VIEW_COUNT = "updateDynamicViewCount";
+    public static final String UPDATE_USER_DYNAMIC_PITCH_COUNT = "updateUserDynamicPitchCount";
+    public static final String UPDATE_DYNAMIC_PITCH_COUNT = "updateDynamicPitchCount";
 
 
 

@@ -212,6 +212,7 @@ public class studyOpt {
         try {
             //获取传递过来的数据
             Map<String, Object> map = FormData.getParam(msg);
+            map.put("id",Integer.parseInt(map.get("id").toString()));
             //删除数据和文件资源等操作
             deleteStudyOpt(sqlSession, map);
             //返回正确数据

@@ -5,6 +5,7 @@ import example.operation.entity.Msg;
 import example.operation.entity.response.ResponseData;
 import example.operation.entity.response.StatusCode;
 import example.operation.impl.common.CommonService;
+import example.operation.impl.interestArticle.interestOpt;
 import example.tool.common.Assemble;
 import example.tool.common.Common;
 import example.tool.common.Mapper;
@@ -85,6 +86,7 @@ public class msgOpt {
         try {
             //获取传递过来的数据
             Map<String, Object> map = FormData.getParam(msg);
+            map.put("id",Integer.parseInt(map.get("id").toString()));
             //删除数据和文件资源等操作
             deleteMsgOpt(sqlSession, map);
             //返回正确数据
@@ -159,6 +161,8 @@ public class msgOpt {
         try {
             //获取传递过来的数据
             Map<String, Object> map = FormData.getParam(msg);
+            map.put("id",Integer.parseInt(map.get("id").toString()));
+            map.put("status_cd",Integer.parseInt(map.get("status_cd").toString()));
             //删除数据和文件资源等操作
             setupMsgOpt(sqlSession, map);
             //返回正确数据
@@ -251,5 +255,37 @@ public class msgOpt {
                 Assemble.responseErrorSetting(responseData, 401, message);
             }
         });
+    }
+
+    /**
+     * 保存留言信息
+     */
+    public static ResponseData saveMsgInfo(Object msg) {
+        ResponseData responseData = new ResponseData(StatusCode.ERROR.getValue());
+        SqlSession sqlSession = MybatisUtils.getSession();
+        String message = "";
+        int num = 0;
+        try {
+            Msg msgInfo = (Msg) FormData.getParam(msg,Msg.class);
+            msgInfo.setCreate_time(CommonService.getDateTime());
+            msgInfo.setUpdate_time(CommonService.getDateTime());
+            num=sqlSession.insert(Mapper.INSERT_NEW_MSG, msgInfo);
+            if (num>0) {
+                Assemble.responseSuccessSetting(responseData, null);
+            }
+            else {
+                message = "database influence record error";
+                msgOpt.logger.warn(message);
+                Assemble.responseErrorSetting(responseData, 401, message);
+            }
+
+        } catch (Exception e) {
+            message = "saveMsgInfo system error";
+            msgOpt.logger.error(message, e);
+            Assemble.responseErrorSetting(responseData, 500, message);
+        } finally {
+            CommonService.databaseCommitClose(sqlSession, responseData, true);
+        }
+        return responseData;
     }
 }

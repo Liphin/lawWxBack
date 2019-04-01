@@ -38,6 +38,10 @@ public class Common {
     public static String CREATE_TIME = "create_time";
     public static String UPDATE_TIME = "update_time";
     public static String NEW_RESOURCE = "new_resource";
+    public static String DYNAMICINFO = "dynamicinfo";
+    public static String USER_DYNAMIC = "user_dynamic";
+    public static String DYNAMIC_TIMESTAMP = "dynamic_timestamp";
+    public static String DYNAMIC_PITCH = "dynamic_pitch";
 
     //config文件的配置参数
     public static String DYNAMICINFOS_SYS_PATH_HTML = "dynamicinfos.system.path.html";

@@ -181,6 +181,26 @@ public class BackAccess {
             ResponseData responseData = dynamicOpt.saveDynamicData(msg);
             httpResponse(ctx, msg, responseData);
         }
+        //获取该用户对动态新闻的用户操作数据情况
+        else if (uri.equals("/getUserDynamicInfo")) {
+            ResponseData responseData = interestOpt.getUserDynamicInfo(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //模糊搜索指定title和时间字段的数据
+        else if (uri.equals("/searchNews")) {
+            ResponseData responseData = interestOpt.searchNews(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //更新用户对动态新闻的点赞情况
+        else if (uri.equals("/updatePitchCount")) {
+            ResponseData responseData = interestOpt.updatePitchCount(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //获取文章信息到手机端
+        else if (uri.equals("/getNewsListToPh")) {
+            ResponseData responseData = interestOpt.getNewsListToPh(msg);
+            httpResponse(ctx, msg, responseData);
+        }
         //获取指定范围内的团队成员数据
         else if (uri.equals("/getRangeTeamListToBg")) {
             ResponseData responseData = teamOpt.getRangeTeamListToBg(msg);
@@ -244,6 +264,11 @@ public class BackAccess {
         //置顶功能设置
         else if (uri.equals("/setMsgStickInfo")) {
             ResponseData responseData = msgOpt.setMsgStickInfo(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //保存留言功能
+        else if (uri.equals("/saveMsgInfo")) {
+            ResponseData responseData = msgOpt.saveMsgInfo(msg);
             httpResponse(ctx, msg, responseData);
         }
         //上传资源信息

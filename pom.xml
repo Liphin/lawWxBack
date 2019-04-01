@@ -92,7 +92,7 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>liphinBackEnd</finalName>
+        <finalName>lawWxBackEnd</finalName>
     </build>
 
 

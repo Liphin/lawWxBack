@@ -63,5 +63,6 @@
         <mapper class="example.operation.mapper.DynamicInfoMapper"/>
         <mapper class="example.operation.mapper.TeamMapper"/>
         <mapper class="example.operation.mapper.MsgMapper"/>
+        <mapper class="example.operation.mapper.UserDynamicMapper"/>
     </mappers>
 </configuration>

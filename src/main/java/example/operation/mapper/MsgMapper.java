@@ -32,4 +32,10 @@ public interface MsgMapper {
 
     @Update("update msg set stick_cd=#{stick_cd}, stick_time=#{stick_time} where timestamp=#{timestamp}")
     public int setMsgStickInfo(@Param("stick_cd") String stick_cd, @Param("stick_time") String stick_time, @Param("timestamp") String timestamp);
+
+    /* insert */
+    @Insert("insert into msg(name, phone, mail, content, status_cd, timestamp, create_time,update_time) " +
+            "values(#{name}, #{phone}, #{mail}, #{content}, #{status_cd}, #{timestamp}, #{create_time},#{update_time})")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
+    public int insertNewMsg(Msg msg);
 }

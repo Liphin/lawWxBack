@@ -195,6 +195,24 @@ public class SqlProvider {
         return stringBuilder.toString();
     }
 
+    /**
+     * 根据dynamicPitch数值动态更新dynamic的pitch_count数据
+     *
+     * @param map
+     * @return
+     */
+    public String updateDynamicPitchCount(Map<String, Object> map) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String timestamp = String.valueOf(map.get(Common.DYNAMIC_TIMESTAMP));
+        Integer dynamicPitch = Integer.parseInt(String.valueOf(map.get(Common.DYNAMIC_PITCH)));
+        if (dynamicPitch == 1) {
+            stringBuilder.append("update dynamicinfo set pitch_count=pitch_count+1 where timestamp='" + timestamp + "'");
+        } else {
+            stringBuilder.append("update dynamicinfo set pitch_count=pitch_count-1 where timestamp='" + timestamp + "'");
+        }
+        return stringBuilder.toString();
+    }
+
 }
 
 
