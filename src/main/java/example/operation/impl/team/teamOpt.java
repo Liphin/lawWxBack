@@ -62,6 +62,38 @@ public class teamOpt {
     }
 
     /**
+     * 获取指定范围的团队成员信息到移动端
+     */
+    public static ResponseData getTeamListToPh(Object msg) {
+        ResponseData responseData = new ResponseData(StatusCode.ERROR.getValue());
+        SqlSession sqlSession = MybatisUtils.getSession();
+        String message = "";
+        try {
+            Map<String, Object> map = FormData.getParam(msg);
+            map.put("status_cd",Integer.parseInt(map.get("status_cd").toString()));
+            List<Team> teamList = sqlSession.selectList(Mapper.GET_RANGE_TEAM_TO_PH, map);
+            if (CommonService.checkNotNull(teamList)) {
+                //设置回传的返回数据
+                Assemble.responseSuccessSetting(responseData, teamList);
+
+            } else {
+                message = "team info not found";
+                teamOpt.logger.warn(message);
+                Assemble.responseErrorSetting(responseData, 401, message);
+            }
+
+        } catch (Exception e){
+            message = "sys error";
+            teamOpt.logger.debug(message, e);
+            Assemble.responseErrorSetting(responseData, 500, message);
+        } finally {
+            CommonService.databaseCommitClose(sqlSession, responseData, false);
+        }
+        return responseData;
+
+    }
+
+    /**
      * 删除成员数据操作
      */
     public static void deleteTeamOpt(SqlSession sqlSession, Map<String, Object> map) throws Exception {

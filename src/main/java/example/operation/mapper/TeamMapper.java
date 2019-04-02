@@ -11,6 +11,9 @@ public interface TeamMapper {
     @Select("select * from team where create_time<#{create_time} order by create_time desc limit 120")
     public List<Team> getRangeTeamToBg(@Param("create_time") String create_time);
 
+    @Select("select * from team where status_cd=#{status_cd} and create_time<#{create_time} order by create_time desc")
+    public List<Team> getRangeTeamToPh(@Param("create_time") String create_time,@Param("status_cd") Integer status_cd);
+
     @SelectProvider(type = SqlProvider.class, method = "searchTeamData")
     public List<Team> searchTeamData(Map<String, Object> map);
 

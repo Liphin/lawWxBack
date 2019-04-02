@@ -34,6 +34,7 @@ public class Mapper {
     public static final String GET_DYNAMIC_NUM = "getDynamicNum";
 
     public static final String GET_RANGE_TEAM_TO_BG = "getRangeTeamToBg";
+    public static final String GET_RANGE_TEAM_TO_PH = "getRangeTeamToPh";
     public static final String GET_TEAM_NUM = "getTeamNum";
 
     public static final String GET_RANGE_MSG_TO_BG = "getRangeMsgToBg";

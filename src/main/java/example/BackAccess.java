@@ -231,6 +231,11 @@ public class BackAccess {
             ResponseData responseData = teamOpt.setTeamStickInfo(msg);
             httpResponse(ctx, msg, responseData);
         }
+        //获取团队成员信息到移动端
+        else if (uri.equals("/getTeamListToPh")) {
+            ResponseData responseData = teamOpt.getTeamListToPh(msg);
+            httpResponse(ctx, msg, responseData);
+        }
         //获取指定范围内的留言数据
         else if (uri.equals("/getRangeMsgListToBg")) {
             ResponseData responseData = msgOpt.getRangeMsgListToBg(msg);
