@@ -35,7 +35,7 @@ public interface TeamMapper {
     public int insertNewTeam(Team team);
 
     /* update */
-    @Update("update team set status_cd=#{status_cd} ,name=#{name},phone=#{phone},mail=#{mail}, content=#{content},update_time=#{update_time} where id=#{id}")
+    @Update("update team set imgUrl=#{imgUrl}, status_cd=#{status_cd} ,name=#{name},phone=#{phone},mail=#{mail}, content=#{content},update_time=#{update_time} where id=#{id}")
     public int updateTeam(Team team);
 
     @Update("update team set stick_cd=#{stick_cd}, stick_time=#{stick_time} where timestamp=#{timestamp}")
