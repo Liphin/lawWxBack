@@ -64,5 +64,6 @@
         <mapper class="example.operation.mapper.TeamMapper"/>
         <mapper class="example.operation.mapper.MsgMapper"/>
         <mapper class="example.operation.mapper.UserDynamicMapper"/>
+        <mapper class="example.operation.mapper.MassInfoMapper"/>
     </mappers>
 </configuration>

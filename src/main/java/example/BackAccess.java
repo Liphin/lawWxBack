@@ -5,6 +5,7 @@ import example.operation.entity.response.ResponseData;
 import example.operation.impl.interestArticle.interestOpt;
 import example.operation.impl.lawfirmDynamic.dynamicOpt;
 import example.operation.impl.login.LoginOpt;
+import example.operation.impl.mass.massOpt;
 import example.operation.impl.msg.msgOpt;
 import example.operation.impl.studyArticle.studyOpt;
 import example.operation.impl.team.teamOpt;
@@ -284,6 +285,41 @@ public class BackAccess {
         //置顶功能设置
         else if (uri.equals("/setDynamicStickInfo")) {
             ResponseData responseData = interestOpt.setDynamicStickInfo(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //添加微信缩略的功能
+        else if (uri.equals("/addMassListToSend")) {
+            ResponseData responseData = interestOpt.addMassListToSend(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //获取指定范围的消息任务列表
+        else if (uri.equals("/getRangeMassToBg")) {
+            ResponseData responseData = massOpt.getRangeMassToBg(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //更新指定群发任务列表
+        else if (uri.equals("/updateMassResult")) {
+            ResponseData responseData = massOpt.updateMassResult(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //删除群发任务
+        else if (uri.equals("/deleteMass")) {
+            ResponseData responseData = massOpt.deleteMass(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //获取指定范围内的待群发的数据
+        else if (uri.equals("/getRangeMassListToBg")) {
+            ResponseData responseData = interestOpt.getRangeMassListToBg(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //搜索待群发的数据
+        else if (uri.equals("/searchMassListData")) {
+            ResponseData responseData = interestOpt.searchMassListData(msg);
+            httpResponse(ctx, msg, responseData);
+        }
+        //更新上传图文结果
+        else if (uri.equals("/updateMassUpload")) {
+            ResponseData responseData = massOpt.updateMassUpload(msg);
             httpResponse(ctx, msg, responseData);
         }
         //若尚未消费该事件，则返回false

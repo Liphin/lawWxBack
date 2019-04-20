@@ -52,7 +52,7 @@ public class SqlProvider {
         String search = String.valueOf(map.get(Common.SEARCH));
         String createTime = String.valueOf(map.get(Common.CREATE_TIME));
         //根据审核级别动态获取相应数据
-        stringBuilder.append("select * from dynamicinfo where create_time<('"+createTime+"') and type=1 and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) order by create_time desc limit 120");
+        stringBuilder.append("select * from dynamicinfo where type=1 and create_time<('"+createTime+"') and type=1 and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) order by create_time desc limit 120");
         return stringBuilder.toString();
     }
 
@@ -68,7 +68,7 @@ public class SqlProvider {
         String search = String.valueOf(map.get(Common.SEARCH));
         String createTime = String.valueOf(map.get(Common.CREATE_TIME));
         //根据审核级别动态获取相应数据
-        stringBuilder.append("select * from dynamicinfo where create_time<('"+createTime+"') and type=2 and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) order by create_time desc limit 120");
+        stringBuilder.append("select * from dynamicinfo where type=2 and create_time<('"+createTime+"') and type=2 and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) order by create_time desc limit 120");
         return stringBuilder.toString();
     }
 
@@ -84,7 +84,23 @@ public class SqlProvider {
         String search = String.valueOf(map.get(Common.SEARCH));
         String createTime = String.valueOf(map.get(Common.CREATE_TIME));
         //根据审核级别动态获取相应数据
-        stringBuilder.append("select * from dynamicinfo where create_time<('"+createTime+"') and type=3 and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) order by create_time desc limit 120");
+        stringBuilder.append("select * from dynamicinfo where type=3 and create_time<('"+createTime+"') and type=3 and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) order by create_time desc limit 120");
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 管理员在手机客户端审核时搜索相关标题的数据
+     *
+     * @param map
+     * @return
+     */
+    public String searchMassListData(Map<String, Object> map) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String statusCd = String.valueOf(map.get(Common.STATUS_CD));
+        String search = String.valueOf(map.get(Common.SEARCH));
+        String createTime = String.valueOf(map.get(Common.CREATE_TIME));
+        //根据审核级别动态获取相应数据
+        stringBuilder.append("select * from dynamicinfo where type<>3 and create_time<('"+createTime+"') and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) order by create_time desc limit 120");
         return stringBuilder.toString();
     }
 
@@ -162,6 +178,21 @@ public class SqlProvider {
         String search = String.valueOf(map.get(Common.SEARCH));
         //根据审核级别动态获取相应数据
         stringBuilder.append("select count(*) from dynamicinfo where type=3 and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) ");
+        return stringBuilder.toString();
+    }
+
+    /**
+     * 管理员在手机客户端审核时搜索相关标题的数据的总数目
+     *
+     * @param map
+     * @return
+     */
+    public String searchMassListDataNum(Map<String, Object> map) {
+        StringBuilder stringBuilder = new StringBuilder();
+        String statusCd = String.valueOf(map.get(Common.STATUS_CD));
+        String search = String.valueOf(map.get(Common.SEARCH));
+        //根据审核级别动态获取相应数据
+        stringBuilder.append("select count(*) from dynamicinfo where type<>3 and status_cd in ("+statusCd+") and (title like concat('%','" + search + "','%')) ");
         return stringBuilder.toString();
     }
 

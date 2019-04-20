@@ -28,9 +28,12 @@ public class Common {
     public static String DYNAMIC_LIST_DATA = "dynamicListData";
     public static String TEAM_LIST_DATA = "teamListData";
     public static String MSG_LIST_DATA = "msgListData";
+    public static String MASS_LIST = "massList";
+    public static String MASS_LIST_DATA = "massListData";
     public static int DYNAMIC_OPT_INSERT = 1;//新增记录
     public static int DYNAMIC_OPT_UPDATE = 2;//更新记录
     public static String DELETE_LIST = "deleteList";
+    public static String UPDATE_LIST = "updateList";
     public static String SETUP_LIST = "setupList";
     public static String TIMESTAMP = "timestamp";
     public static String STATUS_CD = "status_cd";

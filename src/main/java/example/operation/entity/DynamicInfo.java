@@ -5,6 +5,9 @@ import io.netty.handler.codec.http.multipart.FileUpload;
 public class DynamicInfo {
     private int id;
     private String title;
+    private String cover_media_id;
+    private String media_id;
+    private String msg_id;
     private int type;
     private int subtype;
     private String wx_user_id;
@@ -197,11 +200,38 @@ public class DynamicInfo {
         this.coverimgs = coverimgs;
     }
 
+    public String getMedia_id() {
+        return media_id;
+    }
+
+    public void setMedia_id(String media_id) {
+        this.media_id = media_id;
+    }
+
+    public String getCover_media_id() {
+        return cover_media_id;
+    }
+
+    public void setCover_media_id(String cover_media_id) {
+        this.cover_media_id = cover_media_id;
+    }
+
+    public String getMsg_id() {
+        return msg_id;
+    }
+
+    public void setMsg_id(String msg_id) {
+        this.msg_id = msg_id;
+    }
+
     @Override
     public String toString() {
         return "DynamicInfo{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
+                ", cover_media_id='" + cover_media_id + '\'' +
+                ", media_id='" + media_id + '\'' +
+                ", msg_id='" + msg_id + '\'' +
                 ", type=" + type +
                 ", subtype=" + subtype +
                 ", wx_user_id='" + wx_user_id + '\'' +

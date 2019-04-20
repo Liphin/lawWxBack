@@ -308,6 +308,9 @@ public class dynamicOpt {
             dynamicInfo.setCreate_time(CommonService.getDateTime());
             dynamicInfo.setUpdate_time(CommonService.getDateTime());
             dynamicInfo.setStatus_cd(Common.DRAFT_STATUS);
+            dynamicInfo.setCover_media_id("");
+            dynamicInfo.setMedia_id("");
+            dynamicInfo.setMsg_id("");
 
             //插入新数据到数据库
             int num = sqlSession.insert(Mapper.INSERT_NEW_ARTICLE, dynamicInfo);

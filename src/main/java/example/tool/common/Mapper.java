@@ -20,6 +20,8 @@ public class Mapper {
     public static final String SEARCH_TEAM_DATA_NUM = "searchTeamDataNum";
     public static final String SEARCH_MSG_DATA = "searchMsgData";
     public static final String SEARCH_MSG_DATA_NUM = "searchMsgDataNum";
+    public static final String SEARCH_MASSLIST_DATA = "searchMassListData";
+    public static final String SEARCH_MASSLIST_DATA_NUM = "searchMassListDataNum";
     public static final String GET_RANGE_NEWS_INFO_TO_PHONE = "getRangeNewsInfoToPhone";
     public static final String SEARCH_NEWS = "searchNews";
 
@@ -40,28 +42,41 @@ public class Mapper {
     public static final String GET_RANGE_MSG_TO_BG = "getRangeMsgToBg";
     public static final String GET_MSG_NUM = "getMsgNum";
 
+    public static final String GET_RANGE_MASS_TO_BG = "getRangeMassToBg";
+    public static final String GET_MASS_NUM = "getMassNum";
+
+    public static final String GET_RANGE_MASSLIST_TO_BG = "getRangeMassListToBg";
+    public static final String GET_MASSLIST_NUM = "getMassListNum";
+
     //insert
     public static final String EXAMPLE_INSERT = "exampleInsert";
     public static final String INSERT_NEW_ARTICLE = "insertNewArticle";
     public static final String INSERT_NEW_TEAM = "insertNewTeam";
     public static final String INSERT_NEW_MSG = "insertNewMsg";
+    public static final String INSERT_NEW_MASS = "insertNewMass";
 
     //delete
     public static final String EXAMPLE_DELETE = "exampleDelete";
     public static final String DELETE_NEWS = "deleteNews";
     public static final String DELETE_TEAM = "deleteTeam";
     public static final String DELETE_MSG = "deleteMsg";
+    public static final String DELETE_MASS = "deleteMass";
 
     //update
     public static final String EXAMPLE_UPDATE = "exampleUpdate";
     public static final String UPDATE_NEWS = "updateNews";
     public static final String SET_DYNAMIC_STICK_INFO = "setDynamicStickInfo";
+    public static final String UPDATE_COVER_ID = "updateCoverId";
 
     public static final String UPDATE_TEAM = "updateTeam";
     public static final String SET_TEAM_STICK_INFO = "setTeamStickInfo";
 
     public static final String UPDATE_MSG = "updateMsg";
     public static final String SET_MSG_STICK_INFO = "setMsgStickInfo";
+    public static final String UPDATE_MASS = "updateMass";
+    public static final String UPDATE_MASS_RESULT = "updateMassResult";
+    public static final String UPDATE_MASS_RESULT_LIST = "updateMassResultList";
+    public static final String UPDATE_NEWS_UPLOAD = "updateNewsUpload";
 
     //user_dynamic表的数据库操作mapper************************************************************
     //select
