@@ -281,6 +281,10 @@ public class dynamicOpt {
             String htmlFile = dynamicInfoHtmlPath + map.get(Common.TIMESTAMP) + Common.SUFFIX_INDEX_HTML;
             deleteFile(htmlFile);
 
+            //删除新闻内容文件数据
+            String wxhtmlFile = dynamicInfoHtmlPath + map.get(Common.TIMESTAMP) + Common.SUFFIX_WXINDEX_HTML;
+            deleteFile(wxhtmlFile);
+
         } else {
             String message = "delete file from database error";
             dynamicOpt.logger.warn(message);
